@@ -155,6 +155,37 @@ public class Agenda {
         }
     }
     
+    public void deletarPessoas(int id) {
+        Statement stmt = null;
+        Connection conn = null;
+
+        String sql = "DELETE FROM TB_CONTATO WHERE ID_CONTATO = " + id;
+        try {
+            conn = obterConexao();
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            stmt.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
 
 
 }

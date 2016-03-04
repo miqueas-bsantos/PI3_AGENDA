@@ -67,6 +67,8 @@ public class AgendaTeste {
                     agenda.alterarPessoas(id, nome, new String(nascimentoReverse.reverse()), telefone, email);
                 break;
                 case 3:
+                    System.out.println("Digite o codigo:");
+                    agenda.deletarPessoas(s.nextInt());
                 break;
                 case 4:
                     agenda.listarPessoas();
