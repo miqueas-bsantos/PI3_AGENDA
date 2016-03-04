@@ -90,12 +90,9 @@ public class Agenda {
         try {
             conn = obterConexao();
             prestmt = conn.prepareStatement(sql);
-   
-            java.util.Date myDate = new java.util.Date(d);
-            java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
             
             prestmt.setString(1, nome);
-            prestmt.setDate(2, sqlDate);
+            prestmt.setString(2, d);
             prestmt.setString(3, telefone);
             prestmt.setString(4, email);
             prestmt.executeUpdate();
@@ -109,6 +106,41 @@ public class Agenda {
             if (prestmt != null) {
                 try {
                     prestmt.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+            if (conn != null) {
+                try {
+                    conn.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        }
+    }
+    
+     public void alterarPessoas(int id, String nome, String d, String telefone, String email) {
+        Statement stmt = null;
+        Connection conn = null;
+
+         String sql = "UPDATE TB_CONTATO SET NM_CONTATO = '" + nome + "', VL_TELEFONE='" + telefone
+                 + "', DT_NASCIMENTO='" + d + "',  VL_EMAIL ='" + email + "'  WHERE ID_CONTATO=" + id;
+        try {
+            
+            conn = obterConexao();
+            stmt = conn.createStatement();
+            stmt.executeUpdate(sql);
+            stmt.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (stmt != null) {
+                try {
+                    stmt.close();
                 } catch (SQLException ex) {
                     Logger.getLogger(Agenda.class.getName()).log(Level.SEVERE, null, ex);
                 }
